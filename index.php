@@ -11,10 +11,10 @@
             if(action != "") {
                 switch(action) {
                     case "addProduct":
-                        queryString = 'action='+action;
+                        queryString = 'action='+action+'&productName='+$("#productName")+'&productPrice='+$("#productPrice");
                         break;
                     case "add":
-                        queryString = 'action='+action+'&id='+ product_id+'&quantity='+$("#total_quantity_"+id).val();
+                        queryString = 'action='+action+'&id='+ product_id+'&quantity='+$("#total_quantity_"+id);
                         break;
                     case "remove":
                         queryString = 'action='+action+'&id='+ product_code;
@@ -33,9 +33,19 @@
                 },
                 error:function (){}
             });
+            
         }
+
     </script>
 </head>
+
+    <form action="cartAction()">
+        <label for="productName">Product name:</label><br>
+        <input type="text" id="productName" name="productName" value=""><br>
+        <label for="productPrice">Product Price:</label><br>
+        <input type="number" id="productPrice" name="productPrice" value=""><br><br>
+        <input type="submit" value="Submit" onClick="cartAction('addProduct')">
+    </form>
 
 </html>
 
