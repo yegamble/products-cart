@@ -52,13 +52,12 @@ if(session_unset()) {
     //change quantity of product
     function changeQuantity($currentQuantity){
 
-//        if($currentQuantity == 0){
-//            throw new Exception("Quantity Already Zero");
-//        }
+    //prevent negative counts
+
 
         if($_POST["action"] = "add"){
             return $currentQuantity+1;
-        } else if ($_POST["action"] = "remove"){
+        } else if ($_POST["action"] = "remove" && $currentQuantity > 0){
             return $currentQuantity-1;
         }
     }
