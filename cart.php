@@ -10,7 +10,7 @@ if(session_unset()) {
         try {
             $output = "";
             $i = 0;
-            $quantityPriceArray = isset($_SESSION['quantityArray']) ? $_SESSION['quantityArray'] : array();
+            $quantityArray = isset($_SESSION['quantityArray']) ? $_SESSION['quantityArray'] : array();
 
             // ######## please do not alter the following code ########
                     $products = [
@@ -41,7 +41,7 @@ if(session_unset()) {
                 foreach ($products as $product) {
 
                     if (!isset($quantityArray[$i])){
-                        $quantityPriceArray[$i] = ['quantity' => 0];
+                        $quantityArray[$i] = ['quantity' => 0];
                     }
 
                     $output .= "<tr id=$i>";
@@ -49,12 +49,12 @@ if(session_unset()) {
                     $output .= "<td>" . number_format($product['price'],2) . "</td>"; //format prices 2 decimals
                     $output .=  "<td> <a onClick='cartAction('add','".$i."')' class='btnAddProduct cart-action'>+</a> 
                                 / <a onClick='cartAction('remove','".$i."')' class='btnRemoveProduct cart-action'>-<a/></td>";
-                    $output .= "<td><p id='total_quantity_".$i."'>". ($id != null && $id == $i) ? changeQuantity($quantityPriceArray[$i]['quantity']) : $quantityPriceArray[$i] ."</p></td></tr>";
-                    $output .= "<td><p id='total_price_".$i."'>". ($quantityPriceArray[$i]['quantity'] * $product['price']) ."</p></td></tr>";
+                    $output .= "<td><p id='total_quantity_".$i."'>". ($id != null && $id == $i) ? changeQuantity($quantityArray[$i]['quantity']) : $quantityArray[$i] ."</p></td></tr>";
+                    $output .= "<td><p id='total_price_".$i."'>". ($quantityArray[$i]['quantity'] * $product['price']) ."</p></td></tr>";
                     $i++;
                 }
 
-                $output .= "<tr><td>Total Products</td><td></td></tr>";
+                $output .= "<tr><td>Overall Total Products</td><td></td></tr>";
 
                 echo $_SESSION["output"] = !isset($_SESSION["output"] ) ? $output : $_SESSION["output"] ;
             } catch (Exception $e){
@@ -67,9 +67,9 @@ if(session_unset()) {
     {
 
         if($_POST["action"] = "add"){
-            return $currentQuantity+1;
+            return $currentQuantity + 1;
         } else if ($_POST["action"] = "remove" && $currentQuantity > 0){
-            return $currentQuantity-1;
+            return $currentQuantity - 1;
         }
     }
 
