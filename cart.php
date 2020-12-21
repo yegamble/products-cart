@@ -1,6 +1,7 @@
 <?php
 session_start();
-    function productsCart() {
+
+    function productsCart($id = null, $count = null) {
             $output = "";
             $i = 0;
 
@@ -23,7 +24,8 @@ session_start();
                     $output .= "<tr id=$i>";
                     $output .= "<td>" . $product['name'] . "</td>";
                     $output .= "<td>" . $product['price'] . "</td>";
-                    $output .=  "<td> <a onClick='cartAction('add','<?php echo ".$product[$i]."; ?>')' class='btnAddProduct cart-action'>+</a> / <a onClick='cartAction('remove','<?php echo ".$product[$i]."; ?>')' class='btnRemoveProduct cart-action'>-<a/></td>";
+                    $output .=  "<td> <a onClick='cartAction('add','<?php echo ".$product[$i]."; ?>')' class='btnAddProduct cart-action'>+</a> 
+                                / <a onClick='cartAction('remove','<?php echo ".$product[$i]."; ?>')' class='btnRemoveProduct cart-action'>-<a/></td>";
                     $output .= "<td><p id='total_quantity_'".$product[$i].">0</p></td></tr>";
                     $output .= "<td><p id='total_price_'".$product[$i].">0</p></td></tr>";
                     $i++;
@@ -31,14 +33,30 @@ session_start();
 
                 $output .= "<tr><td>Total Products</td><td></td></tr>";
 
-                echo $output;
+                echo $_SESSION["output"] = !isset($_SESSION["output"] ) ? $output : $_SESSION["output"] ;
             } catch (Exception $e){
                 echo $e->getMessage();
             }
+    }
+
+    //change quantity of product
+    function changeQuantity($currentQuantity){
+
+        if($currentQuantity == 0){
+            throw new Exception("Quantity Already Zero");
+        }
+
+        if($_POST["action"] = "add"){
+            return $currentQuantity+1;
+        } else if ($_POST["action"] = "remove"){
+            return $currentQuantity-1;
+        }
     }
 
 ?>
 
 
 
-<?php echo productsCart()?>
+<?php
+    echo productsCart();
+?>
