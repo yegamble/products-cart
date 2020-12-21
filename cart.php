@@ -43,7 +43,7 @@ if(session_unset()) {
                 }
 
                 foreach ($products as $product) {
-
+                    $output .= "<table id='cart'>";
                     if (!isset($quantityArray[$i])){
                         $quantityArray[$i] = ['quantity' => 0];
                     }
@@ -63,6 +63,7 @@ if(session_unset()) {
                 //count overall value of products in cart.
                 $output .= "<tr><td>Overall Total Products: ". json_encode(array_count_values(array_column($quantityArray, 'quantity')))."</tr>";
 
+                $output .= "</table>";
                 echo $_SESSION["output"] = !isset($_SESSION["output"] ) ? $output : $_SESSION["output"] ;
             } catch (Exception $e){
                 echo $e->getMessage();

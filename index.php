@@ -29,7 +29,7 @@
                 data:queryString,
                 type: "POST",
                 success:function(){
-                    location.reload();
+                    location.replace('#cart');
                 },
                 error:function (){}
             });
