@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Product Cart</title>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         <!-- calls cart.php function from buttons in table form-->
         function cartAction(action, id) {
