@@ -22,6 +22,10 @@ if(session_unset()) {
                     ];
             // ########################################################
 
+            if(!isset($_POST["action"])){
+                $_POST["action"] = null;
+            }
+
             //check if new product is added
             if($_POST["action"] == "add_product"){
 
@@ -44,18 +48,20 @@ if(session_unset()) {
                         $quantityArray[$i] = ['quantity' => 0];
                     }
 
+                    $output .= "<tr><th>Name</th><th>Price</th><th>Add/Remove</th><th>Quantity</th><th>Total Price</th></tr>";
+
                     $output .= "<tr id=$i>";
                     $output .= "<td>" . $product['name'] . "</td>";
                     $output .= "<td>" . number_format($product['price'],2) . "</td>"; //format prices 2 decimals
                     $output .=  "<td> <a onClick='cartAction('add','".$i."')' class='btnAddProduct cart-action'>+</a> 
                                 / <a onClick='cartAction('remove','".$i."')' class='btnRemoveProduct cart-action'>-<a/></td>";
-                    $output .= "<td><p id='total_quantity_".$i."'>". ($id != null && $id == $i) ? changeQuantity($quantityArray[$i]['quantity']) : $quantityArray[$i] ."</p></td></tr>";
+                    $output .= "<td><p id='total_quantity_".$i."'>". isset($_POST["action"]) ? changeQuantity($quantityArray[$i]['quantity']) : $quantityArray[$i] ."</p></td></tr>";
                     $output .= "<td><p id='total_price_".$i."'>". ($quantityArray[$i]['quantity'] * $product['price']) ."</p></td></tr>";
                     $i++;
                 }
 
                 //count overall value of products in cart.
-                $output .= "<tr><td>Overall Total Products: ".array_count_values(array_column($quantityArray, 'quantity'))."</tr>";
+                $output .= "<tr><td>Overall Total Products: ". json_encode(array_count_values(array_column($quantityArray, 'quantity')))."</tr>";
 
                 echo $_SESSION["output"] = !isset($_SESSION["output"] ) ? $output : $_SESSION["output"] ;
             } catch (Exception $e){
@@ -76,4 +82,4 @@ if(session_unset()) {
 
 echo productsCart();
 
-?>
+
