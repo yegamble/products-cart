@@ -6,6 +6,8 @@ if(session_unset()) {
 
     //main cart function, accepts id and quantity inputs from JQuery
     function productsCart($id = null, $quantity = null) {
+
+        try {
             $output = "";
             $i = 0;
             $quantityPriceArray = isset($_SESSION['quantityArray']) ? $_SESSION['quantityArray'] : array();
@@ -20,7 +22,17 @@ if(session_unset()) {
                     ];
             // ########################################################
 
-            try {
+            //check if new product is added
+            if($_POST["action"] == "add_product"){
+
+                if(!($_POST["productName"]) || !isset($_POST["productPrice"])){
+                    throw new Exception("Cannot Add Product Information Missing");
+                } else if(array_search($_POST["productName"],$products)){
+                    throw new Exception("Product Already Exists");
+                }
+
+                array_push($products,["name"=>$_POST["productName"],"price"=>$_POST["productPrice"]]);
+            }
 
                 if(empty($products)){
                     throw new Exception("No Products Found");
@@ -29,16 +41,16 @@ if(session_unset()) {
                 foreach ($products as $product) {
 
                     if (!isset($quantityArray[$i])){
-                        $quantityPriceArray[$i] = 0;
+                        $quantityPriceArray[$i] = ['quantity' => 0];
                     }
 
                     $output .= "<tr id=$i>";
                     $output .= "<td>" . $product['name'] . "</td>";
-                    $output .= "<td>" . $product['price'] . "</td>";
+                    $output .= "<td>" . number_format($product['price'],2) . "</td>"; //format prices 2 decimals
                     $output .=  "<td> <a onClick='cartAction('add','".$i."')' class='btnAddProduct cart-action'>+</a> 
                                 / <a onClick='cartAction('remove','".$i."')' class='btnRemoveProduct cart-action'>-<a/></td>";
-                    $output .= "<td><p id='total_quantity_'".$i.">". ($id != null && $id == $i) ? changeQuantity($quantityPriceArray[$i]) : $quantityPriceArray[$i] ."</p></td></tr>";
-                    $output .= "<td><p id='total_price_'".$i.">0</p></td></tr>";
+                    $output .= "<td><p id='total_quantity_".$i."'>". ($id != null && $id == $i) ? changeQuantity($quantityPriceArray[$i]['quantity']) : $quantityPriceArray[$i] ."</p></td></tr>";
+                    $output .= "<td><p id='total_price_".$i."'>". ($quantityPriceArray[$i]['quantity'] * $product['price']) ."</p></td></tr>";
                     $i++;
                 }
 

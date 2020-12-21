@@ -2,13 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Product Cart</title>
 
     <script>
+        <!-- calls cart.php function from buttons in table form-->
         function cartAction(action, id) {
             var queryString = "";
             if(action != "") {
                 switch(action) {
+                    case "addProduct":
+                        queryString = 'action='+action;
+                        break;
                     case "add":
                         queryString = 'action='+action+'&id='+ product_id+'&quantity='+$("#total_quantity_"+id).val();
                         break;
