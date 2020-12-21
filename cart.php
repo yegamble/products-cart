@@ -4,6 +4,7 @@ if(session_unset()) {
     session_start();
 }
 
+    //main cart function, accepts id and quantity inputs from JQuery
     function productsCart($id = null, $quantity = null) {
             $output = "";
             $i = 0;
@@ -34,9 +35,9 @@ if(session_unset()) {
                     $output .= "<tr id=$i>";
                     $output .= "<td>" . $product['name'] . "</td>";
                     $output .= "<td>" . $product['price'] . "</td>";
-                    $output .=  "<td> <a onClick='cartAction('add','<?php echo ".$i."; ?>')' class='btnAddProduct cart-action'>+</a> 
-                                / <a onClick='cartAction('remove','<?php echo ".$i."; ?>')' class='btnRemoveProduct cart-action'>-<a/></td>";
-                    $output .= "<td><p id='total_quantity_'".$i.">". ($id != null && $id == $i) ? changeQuantity($quantity) : $quantityPriceArray[$i] ."</p></td></tr>";
+                    $output .=  "<td> <a onClick='cartAction('add','".$i."')' class='btnAddProduct cart-action'>+</a> 
+                                / <a onClick='cartAction('remove','".$i."')' class='btnRemoveProduct cart-action'>-<a/></td>";
+                    $output .= "<td><p id='total_quantity_'".$i.">". ($id != null && $id == $i) ? changeQuantity($quantityPriceArray[$i]) : $quantityPriceArray[$i] ."</p></td></tr>";
                     $output .= "<td><p id='total_price_'".$i.">0</p></td></tr>";
                     $i++;
                 }
@@ -50,10 +51,8 @@ if(session_unset()) {
     }
 
     //change quantity of product
-    function changeQuantity($currentQuantity){
-
-    //prevent negative counts
-
+    function changeQuantity($currentQuantity): int
+    {
 
         if($_POST["action"] = "add"){
             return $currentQuantity+1;
@@ -62,10 +61,6 @@ if(session_unset()) {
         }
     }
 
-?>
+echo productsCart();
 
-
-
-<?php
-    echo productsCart();
 ?>
