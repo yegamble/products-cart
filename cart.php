@@ -1,10 +1,15 @@
 <?php
-session_start();
 
-    function productsCart($id = null, $count = null) {
+if(session_unset()) {
+    session_start();
+}
+
+    function productsCart($id = null, $quantity = null) {
             $output = "";
             $i = 0;
+            $quantityArray = isset($_SESSION['quantityArray']) ? $_SESSION['quantityArray'] : array();
 
+    // ######## please do not alter the following code ########
             $products = [
                 [ "name" => "Sledgehammer", "price" => 125.75 ],
                 [ "name" => "Axe", "price" => 190.50 ],
@@ -24,10 +29,10 @@ session_start();
                     $output .= "<tr id=$i>";
                     $output .= "<td>" . $product['name'] . "</td>";
                     $output .= "<td>" . $product['price'] . "</td>";
-                    $output .=  "<td> <a onClick='cartAction('add','<?php echo ".$product[$i]."; ?>')' class='btnAddProduct cart-action'>+</a> 
-                                / <a onClick='cartAction('remove','<?php echo ".$product[$i]."; ?>')' class='btnRemoveProduct cart-action'>-<a/></td>";
-                    $output .= "<td><p id='total_quantity_'".$product[$i].">0</p></td></tr>";
-                    $output .= "<td><p id='total_price_'".$product[$i].">0</p></td></tr>";
+                    $output .=  "<td> <a onClick='cartAction('add','<?php echo ".$i."; ?>')' class='btnAddProduct cart-action'>+</a> 
+                                / <a onClick='cartAction('remove','<?php echo ".$i."; ?>')' class='btnRemoveProduct cart-action'>-<a/></td>";
+                    $output .= "<td><p id='total_quantity_'".$i.">". ($id != null && $id == $i) ? changeQuantity($quantity) : $quantityArray ."</p></td></tr>";
+                    $output .= "<td><p id='total_price_'".$i.">0</p></td></tr>";
                     $i++;
                 }
 

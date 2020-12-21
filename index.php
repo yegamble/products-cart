@@ -5,15 +5,15 @@
     <title>Title</title>
 
     <script>
-        function cartAction(action,quantity) {
+        function cartAction(action, id) {
             var queryString = "";
             if(action != "") {
                 switch(action) {
                     case "add":
-                        queryString = 'action='+action+'&code='+ product_code+'&quantity='+$("#qty_"+product_code).val();
+                        queryString = 'action='+action+'&id='+ product_id+'&quantity='+$("#total_quantity_"+id).val();
                         break;
                     case "remove":
-                        queryString = 'action='+action+'&code='+ product_code;
+                        queryString = 'action='+action+'&id='+ product_code;
                         break;
                     case "empty":
                         queryString = 'action='+action;
@@ -21,27 +21,11 @@
                 }
             }
             jQuery.ajax({
-                url: "ajax_action.php",
+                url: "cart.php",
                 data:queryString,
                 type: "POST",
-                success:function(data){
-                    $("#cart-item").html(data);
-                    if(action != "") {
-                        switch(action) {
-                            case "add":
-                                $("#add_"+product_code).hide();
-                                $("#added_"+product_code).show();
-                                break;
-                            case "remove":
-                                $("#add_"+product_code).show();
-                                $("#added_"+product_code).hide();
-                                break;
-                            case "empty":
-                                $(".btnAddAction").show();
-                                $(".btnAdded").hide();
-                                break;
-                        }
-                    }
+                success:function(){
+                    location.reload();
                 },
                 error:function (){}
             });
