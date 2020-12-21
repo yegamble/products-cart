@@ -7,3 +7,6 @@ products array into HTML and calculating quantities.
 - Allows user to create new products
 - Change the quantity of products
 - Remove products
+- Uses PHP sessions to save data
+
+Alternative approach could be to add MySQL for saving beyond PHP sessions.
