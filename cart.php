@@ -54,7 +54,8 @@ if(session_unset()) {
                     $i++;
                 }
 
-                $output .= "<tr><td>Overall Total Products</td><td></td></tr>";
+                //count overall value of products in cart.
+                $output .= "<tr><td>Overall Total Products: ".array_count_values(array_column($quantityArray, 'quantity'))."</tr>";
 
                 echo $_SESSION["output"] = !isset($_SESSION["output"] ) ? $output : $_SESSION["output"] ;
             } catch (Exception $e){
