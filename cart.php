@@ -22,6 +22,7 @@ if(session_unset()) {
                     ];
             // ########################################################
 
+            //set action to null by default
             if(!isset($_POST["action"])){
                 $_POST["action"] = null;
             }
