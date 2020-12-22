@@ -51,7 +51,7 @@ if(session_unset()) {
 
                     $output .= "<tr><th>Name</th><th>Price</th><th>Add/Remove</th><th>Quantity</th><th>Total Price</th></tr>";
 
-                    $output .= "<tr id=$i>";
+                    $output .= "<tr id=".$i.">";
                     $output .= "<td>" . $product['name'] . "</td>";
                     $output .= "<td>" . number_format($product['price'],2) . "</td>"; //format prices 2 decimals
                     $output .=  "<td> <a onClick='cartAction('add','".$i."')' class='btnAddProduct cart-action'>+</a> 
