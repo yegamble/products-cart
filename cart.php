@@ -43,7 +43,7 @@ if(session_unset()) {
                     throw new Exception("No Products Found");
                 }
 
-                foreach ($products as $product) {
+                foreach ($products as $product) { //note: quantity array could be merged to products array before this loop.
                     $output .= "<table id='cart'>";
                     if (!isset($quantityArray[$i])){
                         $quantityArray[$i] = ['quantity' => 0];
