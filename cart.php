@@ -5,7 +5,7 @@ if(session_unset()) {
 }
 
     //main cart function, accepts id and quantity inputs from JQuery
-    function productsCart($id = null, $quantity = null) {
+    function productsCart() {
 
         try {
             $output = "";
