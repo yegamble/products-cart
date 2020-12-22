@@ -1,8 +1,14 @@
 <?php
 
-if(session_unset()) {
-    session_start();
-}
+class cart{
+
+    public function __construct()
+    {
+        if(session_unset()) {
+            session_start();
+        }
+    }
+
 
     //main cart function, accepts id and quantity inputs from JQuery
     function productsCart() {
@@ -56,14 +62,13 @@ if(session_unset()) {
                     $output .= "<td>" . number_format($product['price'],2) . "</td>"; //format prices 2 decimals
                     $output .=  "<td> <a onClick='cartAction('add','".$i."')' class='btnAddProduct cart-action'>+</a> 
                                 / <a onClick='cartAction('remove','".$i."')' class='btnRemoveProduct cart-action'>-<a/></td>";
-                    $output .= "<td><p id='total_quantity_".$i."'>". isset($_POST["action"]) ? changeQuantity($quantityArray[$i]['quantity']) : $quantityArray[$i] ."</p></td></tr>";
+                    $output .= "<td><p id='total_quantity_".$i."'>". isset($_POST["action"]) ? $this->changeQuantity($quantityArray[$i]['quantity']) : $quantityArray[$i] ."</p></td></tr>";
                     $output .= "<td><p id='total_price_".$i."'>". ($quantityArray[$i]['quantity'] * $product['price']) ."</p></td></tr>";
                     $i++;
                 }
 
                 //count overall value of products in cart.
                 $output .= "<tr><td>Overall Total Products: ". json_encode(array_count_values(array_column($quantityArray, 'quantity')))."</tr>";
-
                 $output .= "</table>";
 
                 //set session variables and return output
@@ -84,7 +89,9 @@ if(session_unset()) {
             return $currentQuantity - 1;
         }
     }
+}
 
-echo productsCart();
+$cart = new cart();
+echo $cart->productsCart();
 
 
