@@ -65,6 +65,9 @@ if(session_unset()) {
                 $output .= "<tr><td>Overall Total Products: ". json_encode(array_count_values(array_column($quantityArray, 'quantity')))."</tr>";
 
                 $output .= "</table>";
+
+                //set session variables and return output
+                $_SESSION['quantityArray'] = $quantityArray;
                 echo $_SESSION["output"] = !isset($_SESSION["output"] ) ? $output : $_SESSION["output"] ;
             } catch (Exception $e){
                 echo $e->getMessage();
