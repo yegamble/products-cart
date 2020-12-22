@@ -32,7 +32,7 @@ if(session_unset()) {
 
                 if(!($_POST["productName"]) || !isset($_POST["productPrice"])){
                     throw new Exception("Cannot Add Product Information Missing");
-                } else if(array_search($_POST["productName"],$products)){
+                } else if(array_search($_POST["productName"], array_column($products, 'name'))){
                     throw new Exception("Product Already Exists");
                 }
 
